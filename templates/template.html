@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/ngunnawal.css">
+    {% block pageStyle %}
+{% endblock %}
+
+
+</head>
+<body>
+
+
+<!-- This is the navbar -->
+<div class="navbar">
+    <img src="/static/images/logo.png" width="70px">
+    <img src="/static/images/banner.png" width="10%">
+    <br>
+    <a href="../static/index.html">Home</a>
+    <a href="../static/history.html">History</a>
+    <a href="../static/gallery.html">Gallery</a>
+    <a href="../static/contact.html">Contact Us</a>
+</div>
+
+<div class="grid-container"><!-- Overall Layout -->
+<div class = "full-width">
+        <h1>Index</h1>
+    </div>
+<div class="grid-container"> <!-- Overall Layout -->
+    <div class="full-width text-highlighting">
+        <h1 style="text-align: center">{{ title }}</h1>
+    </div>
+    <div class="double-height">
+        {% block cellContent1 %} {% endblock %}
+    </div>
+    <div>
+        {% block cellContent2 %} {% endblock %}
+    </div>
+    <div class="text-highlighting">
+        {% block cellContent3 %} {% endblock %}
+    </div>
+</div>
+</div>
+
+
+</body>
+</html>
