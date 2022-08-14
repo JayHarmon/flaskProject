@@ -18,10 +18,12 @@
 <div class="navbar">
     <img src="/static/images/logo.png" width="70px">
     <img src="/static/images/banner.png" width="10%">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    {#    Removed bg-dark from nav class to have background of nav same as banner background#}
+    <nav class="navbar navbar-expand-lg navbar-dark ">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            {#            <a class="navbar-brand" href="#"></a>#}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -38,9 +40,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="contact.html">Contact Us</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -48,30 +47,27 @@
 </div>
 
 <div class="container-fluid"> <!-- Overall Layout -->
-<div class="row">
-    <div class="col">
-    <div class="full-width text-highlighting">
-        <h1 style="text-align: center">{{ title }}</h1>
+    <div class="row">
+        <div class="col ">
+            <h1 style="text-align: center">{{ title }}</h1>
+        </div>
     </div>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-4">
-    <div class="double-height">
-        {% block cellContent1 %} {% endblock %}
-    <div class="col-8">
-        {% block cellContent2 %} {% endblock %}
-    </div>
-</div>
-    </div>
-</div>
-<div class="row">
-    <div class="col text-highlighting">
-        {% block cellContent3 %} {% endblock %}
-    </div>
-</div>
 
+    <div class="row">
+        <div class="col-4">
+            {% block cellContent1 %} {% endblock %}
+        </div>
+        <div class="col-8">
+            {% block cellContent2 %} {% endblock %}
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col text-highlighting">
+            {% block cellContent3 %} {% endblock %}
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
