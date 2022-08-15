@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 
@@ -32,7 +32,7 @@ def view_todo():
         db.session.commit()
         db.session.refresh(new_todo)
         return redirect("/todo")
-return render_template("todo.html", todos=all_todo)
+    return render_template("todo.html", todos=all_todo)
 
 if __name__ == '__main__':
     app.run()
