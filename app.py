@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 
@@ -6,8 +6,8 @@ app = Flask(__name__)
 app.config.from_object(Config)  # loads the configuration for the database
 db = SQLAlchemy(app)            # creates the db object using the configuration
 
-from models import Contact, todo
-from forms import ContactForm
+from models import Contact, todo, User
+from forms import ContactForm, RegistrationForm
 
 @app.route("/contact.html", methods=["POST", "GET"])
 def contact():
@@ -50,3 +50,16 @@ def edit_note(todo_id):
 
 if __name__ == '__main__':
     app.run()
+
+
+    @app.route("/register", methods=["GET", "POST"])
+    def register():
+        form = RegistrationForm()
+        if form.validate_on_submit():
+            new_user = User(email_address=form.email_address.data, name=form.name.data,
+                            user_level=1)  # defaults to regular user
+            new_user.set_password(form.password.data)
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for("homepage"))
+        return render_template("registration.html", title="User Registration", form=form)
