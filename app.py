@@ -1,13 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import current_user, login_user, LoginManager, logout_user, login_required
 
 app = Flask(__name__)
 app.config.from_object(Config)  # loads the configuration for the database
 db = SQLAlchemy(app)            # creates the db object using the configuration
+login = LoginManager(app)
+login.login_view = 'login'
 
 from models import Contact, todo, User
-from forms import ContactForm, RegistrationForm
+from forms import ContactForm, RegistrationForm, LoginForm
 
 @app.route("/contact.html", methods=["POST", "GET"])
 def contact():
@@ -20,7 +23,7 @@ def contact():
 
 @app.route('/')
 def homepage():  # put application's code here
-    return render_template("index.html", title="Ngunnawal Country")
+    return render_template("index.html", title="Ngunnawal Country", user=current_user)
 
 @app.route('/todo', methods=["POST", "GET"])
 def view_todo():
@@ -32,7 +35,7 @@ def view_todo():
         db.session.commit()
         db.session.refresh(new_todo)
         return redirect("/todo")
-    return render_template("todo.html", todos=all_todo)
+    return render_template("todo.html", todos=all_todo, user=current_user)
 
 
 @app.route("/todoedit/<todo_id>", methods=["POST", "GET"])
@@ -62,4 +65,15 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for("homepage"))
-    return render_template("registration.html", title="User Registration", form=form)
+    return render_template("registration.html", title="User Registration", form=form, user=current_user)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email_address=form.email_address.data).first()
+        if user is None:
+            return redirect(url_for("login"))
+        login_user(user)
+        return redirect(url_for("homepage"))
+    return render_template("login.html", title="Sign In", form=form, user=current_user)
