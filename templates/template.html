@@ -47,9 +47,15 @@
                      <li class="nav-item">
                         <a class="nav-link" href="register">User Registration</a>
                     </li>
+                    {% if user.is_anonymous %}
                     <li class="nav-item">
-                        <a class="nav-link" href="login">Login</a>
+                        <a class="nav-link" href="/login">Login</a>
                     </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
             <div style="color:white">{{ user.name }}</div>
